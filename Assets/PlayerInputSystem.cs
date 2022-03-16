@@ -10,8 +10,7 @@ public class PlayerInputSystem : MonoBehaviour
     private PlayerInputSystem playerInputSystem;
     private PlayerInputActions playerInputActions;
     private CharacterController characterController;
-    [SerializeField]private GameObject playerCamera;
-    private CinemachineComposer composer;
+    [SerializeField] private Transform cameraFollow;
 
     Vector2 inputView;
     Vector2 inputMovement;
@@ -28,7 +27,6 @@ public class PlayerInputSystem : MonoBehaviour
         playerInputSystem = GetComponent<PlayerInputSystem>();
         characterController = GetComponent<CharacterController>();
 
-        //composer = playerCamera.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineComposer>();
 
         playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Enable();
@@ -54,20 +52,14 @@ public class PlayerInputSystem : MonoBehaviour
     // Start is called before the first frame update
     private void Update()
     {
-        transform.Rotate(Vector3.up * inputView.x * viewSpeed * Time.deltaTime);
+        //transform.Rotate(Vector3.up * inputView.x * viewSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y+(inputView.x*viewSpeed*Time.deltaTime), 0f);
 
-        
-        xRotation -= inputView.y;
-        //playerCamera.GetComponent<CinemachineComposer>().m_TrackedObjectOffset.y += xRotation;
-        //playerCamera.GetComponent<CinemachineComposer>().m_TrackedObjectOffset.y = Mathf.Clamp(composer.m_TrackedObjectOffset.y, -cameraClamp, cameraClamp);
-        //composer.m_TrackedObjectOffset.y += xRotation;
-        //composer.m_TrackedObjectOffset.y = Mathf.Clamp(composer.m_TrackedObjectOffset.y, -cameraClamp, cameraClamp);
-
-        /*
+        Vector3 rotationValues = cameraFollow.rotation.eulerAngles;
+        xRotation -= inputView.y*viewSpeed*Time.deltaTime;
         xRotation = Mathf.Clamp(xRotation, -cameraClamp, cameraClamp);
-        Vector3 targetRoation = transform.eulerAngles;
-        targetRoation.x = xRotation;
-        playerCamera.transform.Rotate(Vector3.right*xRotation*Time.deltaTime);*/
+        //rotationValues.x = xRotation;
+        cameraFollow.rotation= Quaternion.Euler(xRotation,rotationValues.y,rotationValues.z);
 
         inputMovement = playerInputActions.Player.Movement.ReadValue<Vector2>();
         horizontalMovement = (transform.right * inputMovement.x + transform.forward * inputMovement.y);

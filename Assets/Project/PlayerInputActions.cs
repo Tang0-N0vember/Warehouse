@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/PlayerInputActions.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/Project/PlayerInputActions.inputactions'
 
 using System;
 using System.Collections;
@@ -48,7 +48,15 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                     ""id"": ""26ec3fc4-ddc6-477a-81d8-c24ce76451e5"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Hold""
+                },
+                {
+                    ""name"": ""Aim"",
+                    ""type"": ""Button"",
+                    ""id"": ""3c77231a-6d45-4086-9785-42a3d7151dd2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Hold""
                 }
             ],
             ""bindings"": [
@@ -139,6 +147,17 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                     ""action"": ""LookAround"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""20b84183-f55e-44f2-ba8d-404cf51c3f02"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Aim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -151,6 +170,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
         m_Player_View = m_Player.FindAction("View", throwIfNotFound: true);
         m_Player_Interaction = m_Player.FindAction("Interaction", throwIfNotFound: true);
         m_Player_LookAround = m_Player.FindAction("LookAround", throwIfNotFound: true);
+        m_Player_Aim = m_Player.FindAction("Aim", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -204,6 +224,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_View;
     private readonly InputAction m_Player_Interaction;
     private readonly InputAction m_Player_LookAround;
+    private readonly InputAction m_Player_Aim;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -212,6 +233,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
         public InputAction @View => m_Wrapper.m_Player_View;
         public InputAction @Interaction => m_Wrapper.m_Player_Interaction;
         public InputAction @LookAround => m_Wrapper.m_Player_LookAround;
+        public InputAction @Aim => m_Wrapper.m_Player_Aim;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -233,6 +255,9 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                 @LookAround.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLookAround;
                 @LookAround.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLookAround;
                 @LookAround.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLookAround;
+                @Aim.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
+                @Aim.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
+                @Aim.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -249,6 +274,9 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                 @LookAround.started += instance.OnLookAround;
                 @LookAround.performed += instance.OnLookAround;
                 @LookAround.canceled += instance.OnLookAround;
+                @Aim.started += instance.OnAim;
+                @Aim.performed += instance.OnAim;
+                @Aim.canceled += instance.OnAim;
             }
         }
     }
@@ -259,5 +287,6 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
         void OnView(InputAction.CallbackContext context);
         void OnInteraction(InputAction.CallbackContext context);
         void OnLookAround(InputAction.CallbackContext context);
+        void OnAim(InputAction.CallbackContext context);
     }
 }

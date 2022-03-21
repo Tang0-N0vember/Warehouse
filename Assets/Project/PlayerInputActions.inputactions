@@ -35,7 +35,15 @@
                     "id": "26ec3fc4-ddc6-477a-81d8-c24ce76451e5",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Hold"
+                },
+                {
+                    "name": "Aim",
+                    "type": "Button",
+                    "id": "3c77231a-6d45-4086-9785-42a3d7151dd2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold"
                 }
             ],
             "bindings": [
@@ -124,6 +132,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "LookAround",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "20b84183-f55e-44f2-ba8d-404cf51c3f02",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Aim",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

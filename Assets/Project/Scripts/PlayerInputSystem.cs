@@ -20,7 +20,7 @@ public class PlayerInputSystem : MonoBehaviour
 
     private Animator animator;
 
-    //private bool lookingAround=false;
+    private bool inInteractableCollider=false;
 
     Vector2 inputView;
     Vector2 inputMovement;
@@ -42,6 +42,11 @@ public class PlayerInputSystem : MonoBehaviour
 
 
         playerInputActions = new PlayerInputActions();
+        
+
+    }
+    private void OnEnable()
+    {
         playerInputActions.Player.Enable();
         playerInputActions.Player.Movement.performed += Movement_performed;
         playerInputActions.Player.View.performed += ViewMovement_performed;
@@ -50,10 +55,14 @@ public class PlayerInputSystem : MonoBehaviour
         playerInputActions.Player.Aim.performed += Aim_performed;
         playerInputActions.Player.Aim.canceled += Aim_canceled;
         playerInputActions.Player.Interaction.performed += Interaction_performed;
-
+        playerInputActions.Player.Interaction.canceled += Interaction_canceled;
+    }
+    private void OnDisable()
+    {
+        playerInputActions.Player.Disable();
     }
 
-    
+
 
     private void Aim_performed(InputAction.CallbackContext context)
     {
@@ -79,7 +88,12 @@ public class PlayerInputSystem : MonoBehaviour
     }
     private void Interaction_performed(InputAction.CallbackContext context)
     {
-        Debug.Log("Interacting Around");
+        
+        if(inInteractableCollider)Debug.Log("Interacting");
+    }
+    private void Interaction_canceled(InputAction.CallbackContext context)
+    {
+        //Debug.Log("Stoped Interacting");
     }
 
     private void LookAround_performed(InputAction.CallbackContext context)
@@ -141,5 +155,13 @@ public class PlayerInputSystem : MonoBehaviour
     public void SwitchWeaponState()
     {
         Weapon.SetActive(!Weapon.activeSelf);
+    }
+    private void OnTriggerEnter(Collider collider)
+    {
+        if (collider.CompareTag("Interactable")) inInteractableCollider = true;
+    }
+    private void OnTriggerExit(Collider collider)
+    {
+        if (collider.CompareTag("Interactable")) inInteractableCollider = false;
     }
 }
